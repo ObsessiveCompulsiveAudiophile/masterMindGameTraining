@@ -1,13 +1,5 @@
-﻿// Mastermind Deep Q-Network (DQN) Agent - V4 (GPU Accelerated with CUDA) - Patched
-// by Gemini
-//
-// This version ports the entire DQN training and inference logic to the GPU
+﻿// Mastermind Deep Q-Network (DQN) Agent - V4 (GPU Accelerated with CUDA) - Serkan Gur 2025
 // using custom CUDA kernels for maximum performance.
-// Fixes compilation errors related to CUDART_INF_F and vector<bool>.
-//
-// How to Compile (using NVIDIA's nvcc):
-// nvcc -o Mastermind_DQN_GPU.exe kernel.cu -O3 -arch=sm_75 --std=c++17 -Xcompiler "/O2"
-// (Adjust -arch=sm_XX to match your GPU's compute capability, e.g., sm_86 for RTX 30xx)
 
 #include <iostream>
 #include <vector>
@@ -121,7 +113,6 @@ __global__ void calculate_targets_and_loss_delta_kernel(float* delta_out, const 
     if (i >= batch_size) return;
 
     // Find max Q-value for the next state from the target network
-    // FIX #1: Use -HUGE_VALF instead of the non-standard -CUDART_INF_F
     float max_next_q = -HUGE_VALF;
     for (int j = 0; j < action_space_size; ++j) {
         max_next_q = fmaxf(max_next_q, next_q_values[i * action_space_size + j]);
@@ -456,8 +447,6 @@ public:
         std::vector<float> next_states_batch(BATCH_SIZE * (S_CODES + 1));
         std::vector<int> actions_batch(BATCH_SIZE);
         std::vector<float> rewards_batch(BATCH_SIZE);
-
-        // FIX #2: Use std::vector<char> for dones because vector<bool> is not contiguous
         std::vector<char> dones_batch(BATCH_SIZE);
 
         for (int i = 0; i < BATCH_SIZE; ++i) {
