@@ -8,3 +8,4 @@ How to Compile (using NVIDIA's nvcc):
 nvcc -o -O3 -arch=sm_75 --std=c++17 -Xcompiler "/O2"
 (Adjust -arch=sm_XX to match your GPU's compute capability, e.g., sm_86 for RTX 30xx)
 
+<meta name="google-site-verification" content="KqNySZDgV7TztABTaUQROABWYp0Mep-Xv2oqE1NneR0" />
