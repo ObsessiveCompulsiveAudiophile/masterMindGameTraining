@@ -10,4 +10,4 @@ nvcc -o -O3 -arch=sm_75 --std=c++17 -Xcompiler "/O2"
 
 <meta name="google-site-verification" content="KqNySZDgV7TztABTaUQROABWYp0Mep-Xv2oqE1NneR0" />
 
-Serkan Gur 2025
+MasterMind algo Serkan Gur 2025
